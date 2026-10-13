@@ -1,5 +1,5 @@
 import { MetadataRoute } from 'next'
-import { createClient } from '@/lib/supabase/server'
+import { createClient } from '@supabase/supabase-js'
 
 export const revalidate = 3600 // Revalidate sitemap every hour
 
@@ -71,7 +71,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   let blogRoutes: MetadataRoute.Sitemap = []
 
   try {
-    const supabase = await createClient()
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+    if (supabaseUrl && supabaseAnonKey) {
+      const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
     // 1. Published events
     const { data: events } = await supabase
@@ -115,6 +119,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         changeFrequency: 'weekly',
         priority: 0.8,
       }))
+    }
     }
   } catch (error) {
     console.error('Error generating dynamic sitemap:', error)
