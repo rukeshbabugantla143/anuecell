@@ -113,7 +113,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable} ${orbitron.variable}`} suppressHydrationWarning>
-      <body className="min-h-full flex flex-col font-sans antialiased bg-main-bg text-primary-text" suppressHydrationWarning>
+      <body className="min-h-screen flex flex-col font-sans antialiased bg-main-bg text-primary-text" suppressHydrationWarning>
         <GlowCursor
           color="#67E8F9"
           secondaryColor="#A78BFA"
@@ -122,10 +122,8 @@ export default function RootLayout({
           trailTaper={0.8}
           followSpeed={0.16}
           glowIntensity={1.9}
-          className="w-full min-h-screen"
-        >
-          {children}
-        </GlowCursor>
+        />
+        {children}
       </body>
     </html>
   );

@@ -356,10 +356,8 @@ const GlowCursor: React.FC<GlowCursorProps> = ({
       if (!destroyed) raf = requestAnimationFrame(render);
     };
 
-    window.addEventListener('resize', resize);
-    container.addEventListener('pointermove', updatePointer as EventListener);
-    container.addEventListener('pointerenter', updatePointer as EventListener);
-    container.addEventListener('pointerleave', onPointerLeave);
+    window.addEventListener('pointermove', updatePointer as EventListener);
+    window.addEventListener('pointerleave', onPointerLeave);
     resize();
     raf = requestAnimationFrame(render);
 
@@ -367,19 +365,20 @@ const GlowCursor: React.FC<GlowCursorProps> = ({
       destroyed = true;
       cancelAnimationFrame(raf);
       window.removeEventListener('resize', resize);
-      container.removeEventListener('pointermove', updatePointer as EventListener);
-      container.removeEventListener('pointerenter', updatePointer as EventListener);
-      container.removeEventListener('pointerleave', onPointerLeave);
+      window.removeEventListener('pointermove', updatePointer as EventListener);
+      window.removeEventListener('pointerleave', onPointerLeave);
       mesh.geometry.remove();
       program.remove();
     };
   }, [maxDevicePixelRatio]);
 
   return (
-    <div ref={containerRef} className={`glow-cursor${className ? ` ${className}` : ''}`} style={style} {...rest}>
-      <canvas ref={canvasRef} className="glow-cursor__canvas" style={{ mixBlendMode: blendMode as any }} aria-hidden="true" />
-      {children && <div className="glow-cursor__content">{children}</div>}
-    </div>
+    <canvas
+      ref={canvasRef}
+      className={`glow-cursor__canvas pointer-events-none fixed inset-0 z-50 hidden lg:block ${className}`}
+      style={{ mixBlendMode: blendMode as any, ...style }}
+      aria-hidden="true"
+    />
   );
 };
 

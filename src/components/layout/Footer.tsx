@@ -18,7 +18,7 @@ export default async function Footer() {
 
   return (
     <footer className="relative z-10 bg-[#050711] border-t border-border-color/50 overflow-hidden">
-      <div className="absolute inset-0 pointer-events-none opacity-40">
+      <div className="absolute inset-0 pointer-events-none opacity-40 hidden sm:block">
         <DotGrid
           dotSize={6}
           gap={24}

@@ -100,12 +100,13 @@ export default function InnovationSphere() {
   }, [])
 
   return (
-    <div className="w-full h-full min-h-[300px] sm:min-h-[400px] lg:min-h-[500px] relative cursor-grab active:cursor-grabbing">
+    <div className="w-full h-full min-h-[300px] sm:min-h-[400px] lg:min-h-[500px] relative pointer-events-none lg:pointer-events-auto">
 
       <Canvas 
         camera={{ position: [0, 0, 8.5], fov: 45 }} 
-        gl={{ antialias: true, alpha: true }}
-        style={{ touchAction: 'pan-y' }}
+        dpr={[1, 1.5]}
+        gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
+        className="cursor-grab active:cursor-grabbing w-full h-full"
       >
         <ambientLight intensity={0.5} />
         <Suspense fallback={null}>

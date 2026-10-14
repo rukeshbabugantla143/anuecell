@@ -87,6 +87,12 @@ export function Global3DEnvironment() {
           100% { background-position: 0 80px; }
         }
 
+        @media (max-width: 768px) {
+          .perspective-container {
+            display: none !important;
+          }
+        }
+
         @media (prefers-reduced-motion: reduce) {
           .grid-floor { animation: none !important; }
         }

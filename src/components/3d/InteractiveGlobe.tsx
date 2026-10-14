@@ -189,43 +189,45 @@ export default function InteractiveGlobe() {
       onMouseEnter={() => setControlsEnabled(false)}
       onMouseLeave={() => setControlsEnabled(true)}
     >
-      <ErrorBoundary>
-        <Canvas 
-          camera={{ position: [0, 0, 8.5], fov: 45 }} 
-          gl={{ antialias: true, alpha: true }} 
-          className="cursor-grab active:cursor-grabbing w-full h-full"
-          style={{ touchAction: 'pan-y' }}
-        >
-          <ambientLight intensity={0.5} color="#ffffff" />
-          {/* Main Sunlight (Warm/White) */}
-          <directionalLight position={[10, 5, 10]} intensity={2.5} color="#fffcf5" />
-          {/* Cyan Rim Light */}
-          <directionalLight position={[-10, -5, -10]} intensity={1.5} color="#00D9FF" />
-          {/* Magenta Fill Light */}
-          <pointLight position={[0, -5, 0]} intensity={1.0} color="#F044FF" />
+      <div className="w-full h-full pointer-events-none lg:pointer-events-auto">
+        <ErrorBoundary>
+          <Canvas 
+            camera={{ position: [0, 0, 8.5], fov: 45 }} 
+            dpr={[1, 1.5]}
+            gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }} 
+            className="cursor-grab active:cursor-grabbing w-full h-full"
+          >
+            <ambientLight intensity={0.5} color="#ffffff" />
+            {/* Main Sunlight (Warm/White) */}
+            <directionalLight position={[10, 5, 10]} intensity={2.5} color="#fffcf5" />
+            {/* Cyan Rim Light */}
+            <directionalLight position={[-10, -5, -10]} intensity={1.5} color="#00D9FF" />
+            {/* Magenta Fill Light */}
+            <pointLight position={[0, -5, 0]} intensity={1.0} color="#F044FF" />
 
-          <Stars radius={100} depth={50} count={1500} factor={3} saturation={0} fade speed={0.5} />
+            <Stars radius={100} depth={50} count={1000} factor={3} saturation={0} fade speed={0.5} />
 
-          <Suspense fallback={<LoadingSphere />}>
-            <Float speed={1.5} rotationIntensity={0.1} floatIntensity={0.2}>
-              <Earth />
-            </Float>
-          </Suspense>
+            <Suspense fallback={<LoadingSphere />}>
+              <Float speed={1.5} rotationIntensity={0.1} floatIntensity={0.2}>
+                <Earth />
+              </Float>
+            </Suspense>
 
-          <OrbitControls
-            ref={controlsRef}
-            enableZoom={false}
-            enablePan={false}
-            enableRotate={!isTouchDevice}
-            autoRotate={controlsEnabled}
-            autoRotateSpeed={0.5}
-            maxDistance={14}
-            minDistance={5.5}
-            dampingFactor={0.05}
-            enableDamping={true}
-          />
-        </Canvas>
-      </ErrorBoundary>
+            <OrbitControls
+              ref={controlsRef}
+              enableZoom={false}
+              enablePan={false}
+              enableRotate={!isTouchDevice}
+              autoRotate={controlsEnabled}
+              autoRotateSpeed={0.5}
+              maxDistance={14}
+              minDistance={5.5}
+              dampingFactor={0.05}
+              enableDamping={true}
+            />
+          </Canvas>
+        </ErrorBoundary>
+      </div>
 
       {/* Floating Interactive UI Badges */}
       <FloatingBadge
