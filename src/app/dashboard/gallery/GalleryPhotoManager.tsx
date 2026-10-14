@@ -5,6 +5,7 @@ import { Card, CardContent } from '@/components/ui/Card'
 import { Search, Filter, FolderClosed, ExternalLink, Calendar, MapPin, Images, Plus, Layers, Grid } from 'lucide-react'
 import DeleteGalleryImageButton from './DeleteGalleryImageButton'
 import DeleteAlbumButton from './DeleteAlbumButton'
+import EditAlbumModal from './EditAlbumModal'
 import GalleryUploader from './GalleryUploader'
 import Link from 'next/link'
 import { Button } from '@/components/ui/Button'
@@ -207,20 +208,26 @@ export default function GalleryPhotoManager({ albums, photos }: GalleryPhotoMana
                     </div>
 
                     {/* Album Card Actions */}
-                    <div className="p-4 bg-[#0a0f17] border-t border-border-color flex items-center justify-between gap-2">
-                      <div className="flex items-center gap-2">
+                    <div className="p-3.5 bg-[#0a0f17] border-t border-border-color flex flex-wrap items-center justify-between gap-2">
+                      <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
+                        <EditAlbumModal 
+                          album={album} 
+                          onUpdated={(updated) => {
+                            setAlbumList((prev) => prev.map((a) => a.id === updated.id ? { ...a, ...updated } : a))
+                          }}
+                        />
                         <GalleryUploader 
                           albums={albums} 
                           defaultAlbumId={album.id} 
                           variant="compact" 
-                          buttonText="Upload Photos"
+                          buttonText="Upload"
                         />
                         <Link 
                           href={`/gallery/${album.slug}`} 
                           target="_blank"
                           className="inline-flex items-center gap-1 text-xs text-secondary-text hover:text-primary-cyan transition-colors px-2.5 py-1.5 rounded-lg hover:bg-secondary-bg"
                         >
-                          View Public <ExternalLink className="h-3.5 w-3.5" />
+                          View <ExternalLink className="h-3 w-3" />
                         </Link>
                       </div>
 

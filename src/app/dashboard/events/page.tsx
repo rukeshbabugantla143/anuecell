@@ -98,10 +98,10 @@ export default async function DashboardEventsPage() {
                       </Badge>
                     </td>
                     <td className="px-6 py-5 text-right">
-                      <div className="flex items-center justify-end gap-2 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity">
+                      <div className="flex items-center justify-end gap-2">
                         <Link href={`/dashboard/events/${event.id}/edit`}>
-                          <Button variant="ghost" size="sm" className="px-3 py-2 h-auto text-secondary-text hover:text-primary-cyan hover:bg-primary-cyan/10 rounded-lg">
-                            <Edit className="h-4 w-4 mr-2" /> Edit
+                          <Button variant="outline" size="sm" className="px-3 py-1.5 h-auto border-border-color hover:border-primary-cyan text-secondary-text hover:text-primary-cyan bg-secondary-bg hover:bg-primary-cyan/10 rounded-lg font-medium text-xs">
+                            <Edit className="h-3.5 w-3.5 mr-1.5 text-primary-cyan" /> Edit
                           </Button>
                         </Link>
                         <DeleteEventButton id={event.id} />
