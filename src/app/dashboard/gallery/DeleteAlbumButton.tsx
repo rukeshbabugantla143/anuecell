@@ -6,7 +6,15 @@ import { Trash2, Loader2 } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 
-export default function DeleteAlbumButton({ id, title }: { id: string; title: string }) {
+export default function DeleteAlbumButton({ 
+  id, 
+  title,
+  onDeleted
+}: { 
+  id: string
+  title: string
+  onDeleted?: (id: string) => void
+}) {
   const [deleting, setDeleting] = useState(false)
   const supabase = createClient()
   const router = useRouter()
@@ -23,6 +31,7 @@ export default function DeleteAlbumButton({ id, title }: { id: string; title: st
       setDeleting(true)
       const { error } = await supabase.from('albums').delete().eq('id', id)
       if (error) throw new Error(error.message)
+      if (onDeleted) onDeleted(id)
       router.refresh()
     } catch (err: any) {
       console.error(err)

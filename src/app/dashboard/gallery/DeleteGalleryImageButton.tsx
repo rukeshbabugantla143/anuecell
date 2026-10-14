@@ -6,12 +6,21 @@ import { Trash2, Loader2 } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 
-export default function DeleteGalleryImageButton({ id }: { id: string }) {
+export default function DeleteGalleryImageButton({ 
+  id,
+  onDeleted
+}: { 
+  id: string
+  onDeleted?: (id: string) => void
+}) {
   const [deleting, setDeleting] = useState(false)
   const supabase = createClient()
   const router = useRouter()
 
-  const handleDelete = async () => {
+  const handleDelete = async (e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+
     if (!confirm("Are you sure you want to delete this image?")) return
     
     try {
@@ -19,6 +28,7 @@ export default function DeleteGalleryImageButton({ id }: { id: string }) {
       const { error } = await supabase.from('gallery_items').delete().eq('id', id)
       if (error) throw new Error(error.message)
       
+      if (onDeleted) onDeleted(id)
       router.refresh()
     } catch (err: any) {
       console.error(err)

@@ -6,6 +6,9 @@ import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 import DeleteEventButton from './DeleteEventButton'
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 export default async function DashboardEventsPage() {
   const supabase = await createClient()
   

@@ -1,8 +1,12 @@
 import { Card, CardContent } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
 import { Badge } from '@/components/ui/Badge'
-import { MessageSquare, Mail, Search, Trash2, CheckCircle, Clock } from 'lucide-react'
+import { MessageSquare, Mail, Search, CheckCircle, Clock } from 'lucide-react'
 import { createClient } from '@/lib/supabase/server'
+import DeleteMessageButton from './DeleteMessageButton'
+
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
 
 export default async function DashboardMessagesPage() {
   const supabase = await createClient()
@@ -74,9 +78,7 @@ export default async function DashboardMessagesPage() {
                       <Badge variant="info" className="text-primary-cyan border-primary-cyan">{msg.status}</Badge>
                     </td>
                     <td className="px-6 py-5 text-right">
-                      <Button variant="ghost" size="sm" className="px-3 py-2 h-auto text-secondary-text hover:text-functional-error hover:bg-functional-error/10 rounded-lg">
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
+                      <DeleteMessageButton id={msg.id} senderName={msg.name} />
                     </td>
                   </tr>
                 ))

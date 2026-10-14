@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { Card, CardContent, CardHeader } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
-import { ArrowLeft, Save, User, Upload } from 'lucide-react'
+import { ArrowLeft, Save, User, Upload, Trash2, Loader2 } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
@@ -164,22 +164,49 @@ export default function EditTeamMemberPage({ params }: { params: Promise<{ id: s
     }
   }
 
+  async function handleDeleteMember() {
+    if (!confirm(`Are you sure you want to delete "${member?.full_name || 'this team member'}"? This action cannot be undone.`)) return
+    try {
+      setLoading(true)
+      const { error } = await supabase.from('team_members').delete().eq('id', resolvedParams.id)
+      if (error) throw error
+      router.push('/dashboard/team')
+      router.refresh()
+    } catch (err: any) {
+      alert('Failed to delete member: ' + err.message)
+      setLoading(false)
+    }
+  }
+
   if (fetching) {
     return <div className="p-8 text-secondary-text">Loading member details...</div>
   }
 
   return (
     <div className="space-y-6 max-w-4xl">
-      <div className="flex items-center gap-4">
-        <Link href="/dashboard/team">
-          <Button variant="ghost" size="sm" className="p-2 h-auto text-secondary-text hover:text-primary-text">
-            <ArrowLeft className="h-5 w-5" />
-          </Button>
-        </Link>
-        <div>
-          <h1 className="text-2xl font-heading font-bold text-primary-text">Edit Team Member</h1>
-          <p className="text-sm text-secondary-text">Update information for {member?.full_name}</p>
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-4">
+          <Link href="/dashboard/team">
+            <Button variant="ghost" size="sm" className="p-2 h-auto text-secondary-text hover:text-primary-text">
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
+          </Link>
+          <div>
+            <h1 className="text-2xl font-heading font-bold text-primary-text">Edit Team Member</h1>
+            <p className="text-sm text-secondary-text">Update information for {member?.full_name}</p>
+          </div>
         </div>
+        <Button 
+          type="button" 
+          variant="ghost" 
+          size="sm" 
+          onClick={handleDeleteMember}
+          disabled={loading}
+          className="gap-2 text-functional-error hover:bg-functional-error/10 hover:text-functional-error border border-functional-error/30 px-4 py-2"
+        >
+          {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Trash2 className="h-4 w-4" />}
+          Delete Member
+        </Button>
       </div>
 
       {error && (

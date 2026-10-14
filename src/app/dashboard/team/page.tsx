@@ -2,8 +2,12 @@ import { createClient } from '@/lib/supabase/server'
 import { Card, CardContent, CardHeader } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
 import { Badge } from '@/components/ui/Badge'
-import { Plus, Edit, Trash2, Users, Briefcase, CheckCircle, Search, Filter } from 'lucide-react'
+import { Plus, Edit, Users, Briefcase, CheckCircle, Search, Filter } from 'lucide-react'
 import Link from 'next/link'
+import DeleteTeamMemberButton from './DeleteTeamMemberButton'
+
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
 
 export default async function DashboardTeamPage() {
   const supabase = await createClient()
@@ -178,9 +182,7 @@ export default async function DashboardTeamPage() {
                             <Edit className="h-4 w-4 mr-2" /> Edit
                           </Button>
                         </Link>
-                        <Button variant="ghost" size="sm" className="px-3 py-2 h-auto text-secondary-text hover:text-functional-error hover:bg-functional-error/10 rounded-lg">
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
+                        <DeleteTeamMemberButton id={member.id} name={member.full_name} />
                       </div>
                     </td>
                   </tr>

@@ -11,7 +11,10 @@ export default function DeleteEventButton({ id }: { id: string }) {
   const supabase = createClient()
   const router = useRouter()
 
-  const handleDelete = async () => {
+  const handleDelete = async (e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+
     if (!confirm("Are you sure you want to delete this event? This action cannot be undone.")) return
     
     try {
@@ -19,6 +22,12 @@ export default function DeleteEventButton({ id }: { id: string }) {
       const { error } = await supabase.from('events').delete().eq('id', id)
       if (error) throw new Error(error.message)
       
+      const row = (e.target as HTMLElement).closest('tr')
+      if (row) {
+        row.style.opacity = '0'
+        row.style.transition = 'all 0.3s ease'
+        setTimeout(() => row.remove(), 300)
+      }
       router.refresh()
     } catch (err: any) {
       console.error(err)

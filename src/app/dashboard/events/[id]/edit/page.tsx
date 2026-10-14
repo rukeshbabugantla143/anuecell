@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { Card, CardContent } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
-import { ArrowLeft, Save, Upload, Calendar as CalendarIcon, MapPin, Users, Link as LinkIcon, Loader2 } from 'lucide-react'
+import { ArrowLeft, Save, Upload, Calendar as CalendarIcon, MapPin, Users, Link as LinkIcon, Loader2, Trash2 } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import RichTextEditor from '@/components/ui/RichTextEditor'
@@ -177,18 +177,45 @@ export default function EditEventPage({ params }: { params: Promise<{ id: string
     )
   }
 
+  async function handleDeleteEvent() {
+    if (!confirm(`Are you sure you want to delete "${event?.title || 'this event'}"? This action cannot be undone.`)) return
+    try {
+      setLoading(true)
+      const { error } = await supabase.from('events').delete().eq('id', resolvedParams.id)
+      if (error) throw error
+      router.push('/dashboard/events')
+      router.refresh()
+    } catch (err: any) {
+      alert('Failed to delete event: ' + err.message)
+      setLoading(false)
+    }
+  }
+
   return (
     <div className="space-y-6 max-w-4xl pb-12">
-      <div className="flex items-center gap-4">
-        <Link href="/dashboard/events">
-          <Button variant="ghost" className="p-2 h-auto text-secondary-text hover:text-primary-cyan hover:bg-primary-cyan/10 rounded-full">
-            <ArrowLeft className="h-5 w-5" />
-          </Button>
-        </Link>
-        <div>
-          <h1 className="text-3xl font-heading font-bold text-primary-text tracking-tight">Edit Event</h1>
-          <p className="text-sm text-secondary-text">Modify event details, team settings, and registration status.</p>
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-4">
+          <Link href="/dashboard/events">
+            <Button variant="ghost" className="p-2 h-auto text-secondary-text hover:text-primary-cyan hover:bg-primary-cyan/10 rounded-full">
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
+          </Link>
+          <div>
+            <h1 className="text-3xl font-heading font-bold text-primary-text tracking-tight">Edit Event</h1>
+            <p className="text-sm text-secondary-text">Modify event details, team settings, and registration status.</p>
+          </div>
         </div>
+        <Button 
+          type="button" 
+          variant="ghost" 
+          size="sm" 
+          onClick={handleDeleteEvent}
+          disabled={loading}
+          className="gap-2 text-functional-error hover:bg-functional-error/10 hover:text-functional-error border border-functional-error/30 px-4 py-2"
+        >
+          {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Trash2 className="h-4 w-4" />}
+          Delete Event
+        </Button>
       </div>
 
       <Card className="border-border-color shadow-2xl bg-main-bg">

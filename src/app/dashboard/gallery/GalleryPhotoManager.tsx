@@ -40,9 +40,17 @@ export default function GalleryPhotoManager({ albums, photos }: GalleryPhotoMana
   const [activeTab, setActiveTab] = useState<'albums' | 'photos'>('albums')
   const [search, setSearch] = useState('')
   const [selectedAlbumFilter, setSelectedAlbumFilter] = useState('all')
+  const [albumList, setAlbumList] = useState<AlbumItem[]>(albums)
+  const [photoList, setPhotoList] = useState<GalleryItemWithAlbum[]>(photos)
+
+  // Keep state synced with props when revalidated
+  useState(() => {
+    setAlbumList(albums)
+    setPhotoList(photos)
+  })
 
   // Filtered Photos
-  const filteredPhotos = photos.filter((item) => {
+  const filteredPhotos = photoList.filter((item) => {
     const titleMatch = item.title?.toLowerCase().includes(search.toLowerCase())
     const albumMatch = item.albums?.title?.toLowerCase().includes(search.toLowerCase())
     const matchesSearch = titleMatch || albumMatch
@@ -53,7 +61,7 @@ export default function GalleryPhotoManager({ albums, photos }: GalleryPhotoMana
   })
 
   // Filtered Albums
-  const filteredAlbums = albums.filter((alb) => {
+  const filteredAlbums = albumList.filter((alb) => {
     return (
       alb.title.toLowerCase().includes(search.toLowerCase()) ||
       alb.location?.toLowerCase().includes(search.toLowerCase()) ||
@@ -216,7 +224,11 @@ export default function GalleryPhotoManager({ albums, photos }: GalleryPhotoMana
                         </Link>
                       </div>
 
-                      <DeleteAlbumButton id={album.id} title={album.title} />
+                      <DeleteAlbumButton 
+                        id={album.id} 
+                        title={album.title} 
+                        onDeleted={(deletedId) => setAlbumList((prev) => prev.filter((a) => a.id !== deletedId))}
+                      />
                     </div>
 
                   </div>
@@ -273,7 +285,10 @@ export default function GalleryPhotoManager({ albums, photos }: GalleryPhotoMana
                   </div>
 
                   {/* Delete Button */}
-                  <DeleteGalleryImageButton id={item.id} />
+                  <DeleteGalleryImageButton 
+                    id={item.id} 
+                    onDeleted={(deletedId) => setPhotoList((prev) => prev.filter((p) => p.id !== deletedId))}
+                  />
                 </div>
               ))}
             </div>
