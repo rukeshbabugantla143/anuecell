@@ -17,13 +17,15 @@ import {
   Bell,
   Search,
   ChevronDown,
-  UserCheck
+  UserCheck,
+  BookOpen
 } from 'lucide-react'
 
 const navigation = [
   { name: 'Overview', href: '/dashboard', icon: LayoutDashboard },
   { name: 'Team', href: '/dashboard/team', icon: Users },
   { name: 'Events', href: '/dashboard/events', icon: Calendar },
+  { name: 'Blog', href: '/dashboard/blog', icon: BookOpen },
   { name: 'Applications', href: '/dashboard/applications', icon: UserCheck },
   { name: 'Gallery', href: '/dashboard/gallery', icon: ImageIcon },
   { name: 'Messages', href: '/dashboard/contact-messages', icon: MessageSquare },

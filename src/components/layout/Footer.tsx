@@ -45,6 +45,7 @@ export default async function Footer() {
             <ul className="space-y-2">
               <li><Link href="/about" className="text-sm text-secondary-text hover:text-primary-cyan transition-colors">About Us</Link></li>
               <li><Link href="/events" className="text-sm text-secondary-text hover:text-primary-cyan transition-colors">Events</Link></li>
+              <li><Link href="/blog" className="text-sm text-secondary-text hover:text-primary-cyan transition-colors">Blog & Insights</Link></li>
               <li><Link href="/team" className="text-sm text-secondary-text hover:text-primary-cyan transition-colors">Team</Link></li>
               <li><Link href="/gallery" className="text-sm text-secondary-text hover:text-primary-cyan transition-colors">Gallery</Link></li>
             </ul>
