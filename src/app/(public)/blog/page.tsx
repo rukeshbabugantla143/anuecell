@@ -48,7 +48,7 @@ export default async function BlogPage() {
                 className="group bg-[#101827]/80 backdrop-blur-md border border-border-color rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:border-primary-cyan/50 hover:shadow-[0_10px_30px_rgba(0,217,255,0.1)] flex flex-col"
               >
                 {post.cover_image_url && (
-                  <div className="h-48 w-full overflow-hidden relative">
+                  <div className="h-48 w-full overflow-hidden relative" suppressHydrationWarning>
                     <img
                       src={post.cover_image_url}
                       alt={post.title}
@@ -61,7 +61,13 @@ export default async function BlogPage() {
                     <div className="flex items-center justify-between text-xs text-secondary-text mb-3">
                       <span className="text-primary-cyan font-medium">{post.category || 'Insights'}</span>
                       {post.published_at && (
-                        <span>{new Date(post.published_at).toLocaleDateString()}</span>
+                        <span suppressHydrationWarning>
+                          {new Date(post.published_at).toLocaleDateString('en-US', {
+                            month: 'short',
+                            day: 'numeric',
+                            year: 'numeric'
+                          })}
+                        </span>
                       )}
                     </div>
                     <h2 className="text-xl font-heading font-bold text-primary-text mb-3 group-hover:text-primary-cyan transition-colors">

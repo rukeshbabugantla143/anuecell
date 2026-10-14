@@ -98,7 +98,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           <Badge variant="info" className="border-primary-cyan/30 text-primary-cyan bg-primary-cyan/10 font-bold px-3 py-1">
             {category}
           </Badge>
-          <span className="text-secondary-text text-xs sm:text-sm flex items-center gap-1.5">
+          <span className="text-secondary-text text-xs sm:text-sm flex items-center gap-1.5" suppressHydrationWarning>
             <Calendar className="h-3.5 w-3.5 text-muted-text" /> {dateStr}
           </span>
           <span className="text-muted-text text-xs sm:text-sm">•</span>
@@ -121,7 +121,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
         {/* Cover Image */}
         {post.cover_image_url && (
-          <div className="relative w-full h-[320px] sm:h-[460px] rounded-2xl overflow-hidden mb-12 border border-border-color shadow-2xl">
+          <div className="relative w-full h-[320px] sm:h-[460px] rounded-2xl overflow-hidden mb-12 border border-border-color shadow-2xl" suppressHydrationWarning>
             <img
               src={post.cover_image_url}
               alt={title}
