@@ -18,7 +18,7 @@ export function Global3DEnvironment() {
   }, [])
 
   return (
-    <div ref={containerRef} className="fixed inset-0 z-0 pointer-events-none overflow-hidden bg-[#050711]">
+    <div ref={containerRef} className="hidden md:block fixed inset-0 z-0 pointer-events-none overflow-hidden bg-[#050711]">
       
       {/* Soft Horizon Glow */}
       <div className="absolute top-[50%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] h-[400px] bg-[#00D9FF] opacity-[0.05] blur-[120px] rounded-full" />
