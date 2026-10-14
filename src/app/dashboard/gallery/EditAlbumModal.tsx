@@ -24,12 +24,25 @@ interface EditAlbumModalProps {
   onUpdated?: (updated: AlbumItem) => void
 }
 
+const PRESET_CATEGORIES = [
+  'Online Event',
+  'Campus Event',
+  'External College Fest',
+  'Inter-College Hackathon',
+  'Workshop & Bootcamp',
+  'Industrial Visit',
+  'Celebrations & Meetups',
+  'Other'
+]
+
 export default function EditAlbumModal({ album, onUpdated }: EditAlbumModalProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [mounted, setMounted] = useState(false)
   
   const [title, setTitle] = useState(album.title || '')
   const [category, setCategory] = useState(album.category || 'External College Fest')
+  const [isCustomCategory, setIsCustomCategory] = useState(false)
+  const [customCategory, setCustomCategory] = useState('')
   const [location, setLocation] = useState(album.location || '')
   const [eventDate, setEventDate] = useState(album.event_date ? new Date(album.event_date).toISOString().split('T')[0] : '')
   const [description, setDescription] = useState(album.description || '')
@@ -48,7 +61,15 @@ export default function EditAlbumModal({ album, onUpdated }: EditAlbumModalProps
   // Sync state when album prop changes or modal opens
   const handleOpen = () => {
     setTitle(album.title || '')
-    setCategory(album.category || 'External College Fest')
+    const isCustom = Boolean(album.category && !PRESET_CATEGORIES.includes(album.category))
+    setIsCustomCategory(isCustom)
+    if (isCustom) {
+      setCustomCategory(album.category || '')
+      setCategory('Other')
+    } else {
+      setCategory(album.category || 'External College Fest')
+      setCustomCategory('')
+    }
     setLocation(album.location || '')
     setEventDate(album.event_date ? new Date(album.event_date).toISOString().split('T')[0] : '')
     setDescription(album.description || '')
@@ -97,12 +118,16 @@ export default function EditAlbumModal({ album, onUpdated }: EditAlbumModalProps
         coverUrl = publicUrl
       }
 
+      const finalCategory = isCustomCategory
+        ? (customCategory.trim() || 'Event')
+        : (category.trim() || 'Event')
+
       // Update album in Supabase
       const { error: updateError } = await supabase
         .from('albums')
         .update({
           title: title.trim(),
-          category: category.trim() || 'Event',
+          category: finalCategory,
           location: location.trim() || null,
           event_date: eventDate || null,
           description: description.trim() || null,
@@ -119,7 +144,7 @@ export default function EditAlbumModal({ album, onUpdated }: EditAlbumModalProps
         onUpdated({
           ...album,
           title: title.trim(),
-          category: category.trim() || 'Event',
+          category: finalCategory,
           location: location.trim() || null,
           event_date: eventDate || null,
           description: description.trim() || null,
@@ -191,23 +216,47 @@ export default function EditAlbumModal({ album, onUpdated }: EditAlbumModalProps
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-secondary-text mb-1 uppercase tracking-wider flex items-center gap-1">
-                    <Tag className="h-3 w-3 text-primary-cyan" /> Category
-                  </label>
-                  <select
-                    value={category}
-                    onChange={(e) => setCategory(e.target.value)}
-                    className="w-full bg-[#151F30] border border-border-color rounded-xl px-3 py-2.5 text-xs sm:text-sm text-primary-text focus:outline-none focus:border-primary-cyan"
-                  >
-                    <option value="Online Event">Online Event</option>
-                    <option value="Campus Event">Campus Event</option>
-                    <option value="External College Fest">External College Fest</option>
-                    <option value="Inter-College Hackathon">Inter-College Hackathon</option>
-                    <option value="Workshop & Bootcamp">Workshop & Bootcamp</option>
-                    <option value="Industrial Visit">Industrial Visit</option>
-                    <option value="Celebrations & Meetups">Celebrations & Meetups</option>
-                    <option value="Other">Other</option>
-                  </select>
+                  <div className="flex items-center justify-between mb-1">
+                    <label className="block text-xs font-semibold text-secondary-text uppercase tracking-wider flex items-center gap-1">
+                      <Tag className="h-3 w-3 text-primary-cyan" /> Category
+                    </label>
+                    <button
+                      type="button"
+                      onClick={() => setIsCustomCategory(!isCustomCategory)}
+                      className="text-xs text-primary-cyan hover:underline font-medium"
+                    >
+                      {isCustomCategory ? 'Choose Preset' : '+ Type Custom'}
+                    </button>
+                  </div>
+
+                  {!isCustomCategory ? (
+                    <select
+                      value={category}
+                      onChange={(e) => {
+                        if (e.target.value === '__custom__') {
+                          setIsCustomCategory(true)
+                        } else {
+                          setCategory(e.target.value)
+                        }
+                      }}
+                      className="w-full bg-[#151F30] border border-border-color rounded-xl px-3 py-2.5 text-xs sm:text-sm text-primary-text focus:outline-none focus:border-primary-cyan"
+                    >
+                      {PRESET_CATEGORIES.map((cat) => (
+                        <option key={cat} value={cat}>{cat}</option>
+                      ))}
+                      <option value="__custom__">+ Type Custom Category...</option>
+                    </select>
+                  ) : (
+                    <input
+                      type="text"
+                      required
+                      placeholder="Type custom category name..."
+                      value={customCategory}
+                      onChange={(e) => setCustomCategory(e.target.value)}
+                      autoFocus
+                      className="w-full bg-[#151F30] border border-primary-cyan/60 rounded-xl px-3 py-2.5 text-xs sm:text-sm text-primary-text focus:outline-none focus:border-primary-cyan animate-in fade-in duration-200"
+                    />
+                  )}
                 </div>
 
                 <div>

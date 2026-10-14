@@ -12,6 +12,8 @@ export default function CreateAlbumModal() {
   const [mounted, setMounted] = useState(false)
   const [title, setTitle] = useState('')
   const [category, setCategory] = useState('External College Fest')
+  const [isCustomCategory, setIsCustomCategory] = useState(false)
+  const [customCategory, setCustomCategory] = useState('')
   const [location, setLocation] = useState('')
   const [eventDate, setEventDate] = useState(new Date().toISOString().split('T')[0])
   const [description, setDescription] = useState('')
@@ -75,6 +77,10 @@ export default function CreateAlbumModal() {
         .replace(/(^-|-$)+/g, '') || 'album'
       const slug = `${baseSlug}-${Math.random().toString(36).substring(2, 6)}`
 
+      const finalCategory = isCustomCategory
+        ? (customCategory.trim() || 'Event')
+        : (category.trim() || 'Event')
+
       // Insert album
       const { error: insertError } = await supabase
         .from('albums')
@@ -82,7 +88,7 @@ export default function CreateAlbumModal() {
           {
             title: title.trim(),
             slug,
-            category: category.trim() || 'Event',
+            category: finalCategory,
             location: location.trim() || null,
             event_date: eventDate || null,
             description: description.trim() || null,
@@ -170,24 +176,54 @@ export default function CreateAlbumModal() {
               {/* Category & Location Grid */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
-                  <label className="text-sm font-medium text-primary-text flex items-center gap-1.5">
-                    <Tag className="h-3.5 w-3.5 text-primary-cyan" /> Category / Type
-                  </label>
-                  <select
-                    value={category}
-                    onChange={(e) => setCategory(e.target.value)}
-                    disabled={saving}
-                    className="w-full bg-[#151F30] border border-border-color rounded-xl px-4 py-2.5 text-sm text-primary-text focus:outline-none focus:border-primary-cyan"
-                  >
-                    <option value="Online Event">Online Event</option>
-                    <option value="Campus Event">Campus Event</option>
-                    <option value="External College Fest">External College Fest</option>
-                    <option value="Inter-College Hackathon">Inter-College Hackathon</option>
-                    <option value="Workshop & Bootcamp">Workshop & Bootcamp</option>
-                    <option value="Industrial Visit">Industrial Visit</option>
-                    <option value="Celebrations & Meetups">Celebrations & Meetups</option>
-                    <option value="Other">Other</option>
-                  </select>
+                  <div className="flex items-center justify-between">
+                    <label className="text-sm font-medium text-primary-text flex items-center gap-1.5">
+                      <Tag className="h-3.5 w-3.5 text-primary-cyan" /> Category / Type
+                    </label>
+                    <button
+                      type="button"
+                      onClick={() => setIsCustomCategory(!isCustomCategory)}
+                      className="text-xs text-primary-cyan hover:underline font-medium"
+                    >
+                      {isCustomCategory ? 'Choose Preset' : '+ Type Custom'}
+                    </button>
+                  </div>
+
+                  {!isCustomCategory ? (
+                    <select
+                      value={category}
+                      onChange={(e) => {
+                        if (e.target.value === '__custom__') {
+                          setIsCustomCategory(true)
+                        } else {
+                          setCategory(e.target.value)
+                        }
+                      }}
+                      disabled={saving}
+                      className="w-full bg-[#151F30] border border-border-color rounded-xl px-4 py-2.5 text-sm text-primary-text focus:outline-none focus:border-primary-cyan"
+                    >
+                      <option value="Online Event">Online Event</option>
+                      <option value="Campus Event">Campus Event</option>
+                      <option value="External College Fest">External College Fest</option>
+                      <option value="Inter-College Hackathon">Inter-College Hackathon</option>
+                      <option value="Workshop & Bootcamp">Workshop & Bootcamp</option>
+                      <option value="Industrial Visit">Industrial Visit</option>
+                      <option value="Celebrations & Meetups">Celebrations & Meetups</option>
+                      <option value="Other">Other</option>
+                      <option value="__custom__">+ Type Custom Category...</option>
+                    </select>
+                  ) : (
+                    <input
+                      type="text"
+                      required
+                      placeholder="Type custom category name..."
+                      value={customCategory}
+                      onChange={(e) => setCustomCategory(e.target.value)}
+                      disabled={saving}
+                      autoFocus
+                      className="w-full bg-[#151F30] border border-primary-cyan/60 rounded-xl px-4 py-2.5 text-sm text-primary-text focus:outline-none focus:border-primary-cyan animate-in fade-in duration-200"
+                    />
+                  )}
                 </div>
 
                 <div className="space-y-1.5">
