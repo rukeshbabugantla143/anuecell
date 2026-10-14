@@ -61,8 +61,8 @@ export default function SettingsManager({
   const [general, setGeneral] = useState<GeneralSettings>({
     site_name: initialGeneral?.site_name || 'ANU E-Cell',
     tagline: initialGeneral?.tagline || 'Innovate. Build. Scale.',
-    contact_email: initialGeneral?.contact_email || 'hello@anuecell.com',
-    contact_phone: initialGeneral?.contact_phone || '+91 86323 46114',
+    contact_email: initialGeneral?.contact_email || 'ecellanu2026@gmail.com',
+    contact_phone: initialGeneral?.contact_phone || '+91 81065 53307 / +91 86881 99031',
     address: initialGeneral?.address || 'Acharya Nagarjuna University, NH16, Nagarjuna Nagar, Guntur, AP - 522510',
     membership_status: initialGeneral?.membership_status || 'open'
   })

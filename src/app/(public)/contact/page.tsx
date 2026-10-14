@@ -71,7 +71,12 @@ export default function ContactPage() {
               </div>
               <div>
                 <h4 className="text-primary-text font-medium mb-1">Email Us</h4>
-                <p className="text-secondary-text text-sm">ecell@anu.edu.in</p>
+                <a 
+                  href="mailto:ecellanu2026@gmail.com" 
+                  className="text-secondary-text hover:text-primary-cyan transition-colors text-sm font-medium"
+                >
+                  ecellanu2026@gmail.com
+                </a>
               </div>
             </div>
 
@@ -81,7 +86,20 @@ export default function ContactPage() {
               </div>
               <div>
                 <h4 className="text-primary-text font-medium mb-1">Call Us</h4>
-                <p className="text-secondary-text text-sm">+91 XXXXX XXXXX</p>
+                <div className="flex flex-col gap-1 text-sm">
+                  <a 
+                    href="tel:+918106553307" 
+                    className="text-secondary-text hover:text-primary-cyan transition-colors font-medium flex items-center gap-1.5"
+                  >
+                    <span>+91 81065 53307</span>
+                  </a>
+                  <a 
+                    href="tel:+918688199031" 
+                    className="text-secondary-text hover:text-primary-cyan transition-colors font-medium flex items-center gap-1.5"
+                  >
+                    <span>+91 86881 99031</span>
+                  </a>
+                </div>
               </div>
             </div>
           </div>
