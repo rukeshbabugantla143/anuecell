@@ -89,17 +89,31 @@ function HologramSphere() {
 }
 
 export default function InnovationSphere() {
-  return (
-    <div className="w-full h-full min-h-[400px] lg:min-h-[500px] relative cursor-grab active:cursor-grabbing">
+  const [isTouchDevice, setIsTouchDevice] = React.useState(false)
 
-      <Canvas camera={{ position: [0, 0, 8.5], fov: 45 }} gl={{ antialias: true, alpha: true }}>
+  React.useEffect(() => {
+    setIsTouchDevice(
+      window.matchMedia('(pointer: coarse)').matches ||
+      ('ontouchstart' in window) ||
+      (navigator.maxTouchPoints > 0)
+    )
+  }, [])
+
+  return (
+    <div className="w-full h-full min-h-[300px] sm:min-h-[400px] lg:min-h-[500px] relative cursor-grab active:cursor-grabbing">
+
+      <Canvas 
+        camera={{ position: [0, 0, 8.5], fov: 45 }} 
+        gl={{ antialias: true, alpha: true }}
+        style={{ touchAction: 'pan-y' }}
+      >
         <ambientLight intensity={0.5} />
         <Suspense fallback={null}>
           <Float speed={2} rotationIntensity={0.2} floatIntensity={0.5}>
             <HologramSphere />
           </Float>
         </Suspense>
-        <OrbitControls enableZoom={false} enablePan={false} autoRotate autoRotateSpeed={1.0} />
+        <OrbitControls enableZoom={false} enablePan={false} enableRotate={!isTouchDevice} autoRotate autoRotateSpeed={1.0} />
       </Canvas>
 
       {/* Floating HTML Glass Panels (Moved outside Canvas to prevent React 18 unmount errors) */}

@@ -204,6 +204,19 @@ const GlowCursor: React.FC<GlowCursorProps> = ({
     const canvas = canvasRef.current;
     if (!container || !canvas) return;
 
+    // Disable GlowCursor completely on touch/mobile screens to optimize performance
+    const isTouch =
+      typeof window !== 'undefined' &&
+      (window.matchMedia('(pointer: coarse)').matches ||
+        window.matchMedia('(hover: none)').matches ||
+        'ontouchstart' in window ||
+        navigator.maxTouchPoints > 0);
+
+    if (isTouch) {
+      canvas.style.display = 'none';
+      return;
+    }
+
     const initialConfig = propsRef.current;
     const renderer = new Renderer({
       canvas,
@@ -257,8 +270,8 @@ const GlowCursor: React.FC<GlowCursorProps> = ({
     let destroyed = false;
 
     const resize = () => {
-      width = Math.max(container.clientWidth, 1);
-      height = Math.max(container.clientHeight, 1);
+      width = Math.max(window.innerWidth, 1);
+      height = Math.max(window.innerHeight, 1);
       renderer.setSize(width, height);
       program.uniforms.uResolution.value = [width, height];
     };
@@ -277,9 +290,8 @@ const GlowCursor: React.FC<GlowCursorProps> = ({
     };
 
     const updatePointer = (event: PointerEvent | MouseEvent) => {
-      const rect = container.getBoundingClientRect();
-      const x = clamp(event.clientX - rect.left, 0, rect.width);
-      const y = clamp(rect.height - (event.clientY - rect.top), 0, rect.height);
+      const x = clamp(event.clientX, 0, window.innerWidth);
+      const y = clamp(window.innerHeight - event.clientY, 0, window.innerHeight);
       if (!initialized) initializeTrail(x, y);
       target.x = x;
       target.y = y;
@@ -344,8 +356,7 @@ const GlowCursor: React.FC<GlowCursorProps> = ({
       if (!destroyed) raf = requestAnimationFrame(render);
     };
 
-    const resizeObserver = new ResizeObserver(resize);
-    resizeObserver.observe(container);
+    window.addEventListener('resize', resize);
     container.addEventListener('pointermove', updatePointer as EventListener);
     container.addEventListener('pointerenter', updatePointer as EventListener);
     container.addEventListener('pointerleave', onPointerLeave);
@@ -355,7 +366,7 @@ const GlowCursor: React.FC<GlowCursorProps> = ({
     return () => {
       destroyed = true;
       cancelAnimationFrame(raf);
-      resizeObserver.disconnect();
+      window.removeEventListener('resize', resize);
       container.removeEventListener('pointermove', updatePointer as EventListener);
       container.removeEventListener('pointerenter', updatePointer as EventListener);
       container.removeEventListener('pointerleave', onPointerLeave);

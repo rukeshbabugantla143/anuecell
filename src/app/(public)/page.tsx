@@ -56,19 +56,19 @@ export default async function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
       />
       {/* 01. Hero Section */}
-      <section className="relative h-[calc(100vh-4rem)] min-h-[calc(100vh-4rem)] w-full flex items-center justify-center overflow-hidden bg-transparent">
+      <section className="relative min-h-[calc(100vh-4rem)] lg:h-[calc(100vh-4rem)] w-full flex items-center justify-center overflow-hidden bg-transparent pt-6 pb-12 lg:py-0">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-primary-cyan/10 via-transparent to-main-bg/80 z-0 pointer-events-none"></div>
         
         {/* Full width container, responsive padding, no max-width restriction */}
         <div className="relative z-20 w-full px-4 sm:px-8 lg:pl-[6vw] lg:pr-[4vw]">
-          <div className="flex flex-col lg:flex-row items-center justify-between w-full h-full gap-8 lg:gap-0">
+          <div className="flex flex-col lg:flex-row items-center justify-between w-full h-full gap-6 lg:gap-0">
             
             {/* Left Column: Text & CTA */}
-            <div className="w-full lg:w-[45%] max-w-[600px] text-left z-30 flex flex-col justify-center">
-              <Badge variant="info" className="mb-4 inline-flex self-start border-primary-cyan/40 text-primary-cyan px-3 py-1 bg-primary-cyan/5 backdrop-blur-md">
+            <div className="w-full lg:w-[48%] max-w-[620px] text-left z-30 flex flex-col justify-center">
+              <Badge variant="info" className="mb-3 sm:mb-4 inline-flex self-start border-primary-cyan/40 text-primary-cyan px-3 py-1 bg-primary-cyan/5 backdrop-blur-md text-xs sm:text-sm">
                 Welcome to the Future
               </Badge>
-              <h1 className="hero-heading text-4xl sm:text-5xl md:text-6xl lg:text-[5rem] flex flex-col gap-1 leading-[1.1]">
+              <h1 className="hero-heading text-3xl sm:text-5xl md:text-6xl lg:text-[4.75rem] flex flex-col gap-1 leading-[1.1]">
                 <span className="block text-primary-text drop-shadow-[0_0_8px_rgba(0,217,255,0.15)]">
                   ANU E-CELL
                 </span>
@@ -76,25 +76,25 @@ export default async function HomePage() {
                   INNOVATE. BUILD. SCALE.
                 </span>
               </h1>
-              <p className="mt-5 text-base sm:text-lg text-secondary-text drop-shadow-md border-l-2 border-primary-cyan/60 pl-4">
+              <p className="mt-3 sm:mt-5 text-sm sm:text-base md:text-lg text-secondary-text drop-shadow-md border-l-2 border-primary-cyan/60 pl-3 sm:pl-4 leading-relaxed">
                 The premier entrepreneurship hub fostering innovation, startups, and leadership among students.
               </p>
-              <div className="mt-8 flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+              <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto">
                 <Link href="#about" className="scroll-smooth w-full sm:w-auto">
-                  <Button variant="cta" size="lg" className="group w-full sm:w-auto">
+                  <Button variant="cta" size="lg" className="group w-full sm:w-auto justify-center">
                     Explore Our Community
                     <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                   </Button>
                 </Link>
                 <Link href="#events" className="scroll-smooth w-full sm:w-auto">
-                  <Button variant="secondary" size="lg" className="w-full sm:w-auto">Upcoming Events</Button>
+                  <Button variant="secondary" size="lg" className="w-full sm:w-auto justify-center">Upcoming Events</Button>
                 </Link>
               </div>
             </div>
 
             {/* Right Column: 3D Interactive Globe */}
-            <div className="w-full lg:w-[55%] relative h-[350px] sm:h-[450px] lg:h-[46vw] lg:max-h-[850px] z-20 mt-8 lg:mt-0 flex items-center justify-center">
-              <div className="absolute inset-0 bg-primary-cyan/10 rounded-full blur-[100px] -z-10 w-3/4 h-3/4 m-auto"></div>
+            <div className="w-full lg:w-[52%] relative h-[320px] sm:h-[420px] lg:h-[46vw] lg:max-h-[850px] z-20 mt-4 lg:mt-0 flex items-center justify-center">
+              <div className="absolute inset-0 bg-primary-cyan/10 rounded-full blur-[70px] sm:blur-[100px] -z-10 w-3/4 h-3/4 m-auto"></div>
               <InteractiveGlobeWrapper />
             </div>
             
@@ -103,7 +103,7 @@ export default async function HomePage() {
       </section>
 
       {/* 02. About ANU E-CELL (Redesigned) */}
-      <section id="about" className="py-24 relative overflow-hidden">
+      <section id="about" className="py-16 sm:py-24 relative overflow-hidden">
         {/* Subtle cyan glow behind the entire section */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-3xl h-[500px] bg-primary-cyan/5 rounded-full blur-[120px] -z-10 pointer-events-none"></div>
         <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-primary-cyan/20 to-transparent"></div>
@@ -111,31 +111,31 @@ export default async function HomePage() {
         <div className="relative z-20 w-full px-4 sm:px-8 lg:px-[6vw]">
           
           {/* Top Half: 2 Columns */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center mb-24">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 items-center mb-16 sm:mb-24">
             
             {/* Left Column: Text */}
             <div className="flex flex-col items-start text-left">
-              <div className="flex items-center gap-4 mb-6">
-                <span className="text-primary-cyan font-heading text-sm tracking-widest uppercase font-bold">WHO WE ARE</span>
+              <div className="flex items-center gap-4 mb-4 sm:mb-6">
+                <span className="text-primary-cyan font-heading text-xs sm:text-sm tracking-widest uppercase font-bold">WHO WE ARE</span>
                 <div className="h-[1px] w-12 bg-primary-cyan/40"></div>
               </div>
               
-              <h2 className="text-5xl sm:text-6xl md:text-7xl font-heading font-bold text-primary-text mb-6 leading-[1.1]">
+              <h2 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-heading font-bold text-primary-text mb-4 sm:mb-6 leading-[1.15]">
                 Ideas into <br/><span className="text-primary-cyan drop-shadow-[0_0_15px_rgba(0,217,255,0.4)]">Impact.</span>
               </h2>
               
-              <p className="text-secondary-text text-lg max-w-lg mb-10 leading-relaxed border-l-2 border-primary-cyan/30 pl-5">
+              <p className="text-secondary-text text-sm sm:text-base md:text-lg max-w-lg mb-6 sm:mb-10 leading-relaxed border-l-2 border-primary-cyan/30 pl-4 sm:pl-5">
                 ANU E-CELL empowers student innovators by creating opportunities, providing mentorship, and building a strong entrepreneurship culture on campus.
               </p>
               
-              <div className="flex flex-wrap gap-4">
-                <Link href="/about">
-                  <Button variant="cta" size="lg" className="px-8 shadow-[0_0_15px_rgba(0,217,255,0.2)]">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto">
+                <Link href="/about" className="w-full sm:w-auto">
+                  <Button variant="cta" size="lg" className="w-full sm:w-auto px-6 sm:px-8 shadow-[0_0_15px_rgba(0,217,255,0.2)] justify-center">
                     Our Mission <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
                 </Link>
-                <Link href="/team">
-                  <Button variant="outline" size="lg" className="px-8 border-border-color text-primary-text hover:bg-main-bg">
+                <Link href="/team" className="w-full sm:w-auto">
+                  <Button variant="outline" size="lg" className="w-full sm:w-auto px-6 sm:px-8 border-border-color text-primary-text hover:bg-main-bg justify-center">
                     Meet the Team
                   </Button>
                 </Link>
@@ -143,7 +143,7 @@ export default async function HomePage() {
             </div>
 
             {/* Right Column: 3D Innovation Sphere */}
-            <div className="relative w-full h-[400px] lg:h-[500px]">
+            <div className="relative w-full h-[320px] sm:h-[420px] lg:h-[500px]">
               <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-64 h-8 bg-primary-cyan/30 blur-[20px] rounded-[100%]"></div>
               {/* Sci-Fi Base/Pedestal Graphic (CSS) */}
               <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-48 h-2 border-b-2 border-primary-cyan/50 rounded-[100%] shadow-[0_5px_15px_rgba(0,217,255,0.4)]"></div>
@@ -155,7 +155,7 @@ export default async function HomePage() {
           </div>
 
           {/* Bottom Half: 4 Responsive Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             
             {/* Events Card */}
             <Link href="#events" className="group block">
@@ -362,14 +362,14 @@ export default async function HomePage() {
       </section>
 
       {/* 09. Join Community */}
-      <section className="py-24 relative overflow-hidden z-10">
+      <section className="py-16 sm:py-24 relative overflow-hidden z-10">
         <div className="absolute inset-0 bg-primary-cyan/5 pointer-events-none"></div>
         <div className="relative z-20 w-full px-4 sm:px-8 lg:px-[6vw] text-center max-w-[1400px] mx-auto">
-          <h2 className="text-4xl font-display font-bold text-primary-text mb-6">Join Our Community</h2>
-          <p className="text-lg text-secondary-text mb-10">Become a member, attend our events, and start building the future.</p>
-          <div className="flex justify-center gap-4">
-            <Link href="/join"><Button variant="cta" size="lg">Join Now</Button></Link>
-            <Link href="/contact"><Button variant="secondary" size="lg">Contact Us</Button></Link>
+          <h2 className="text-3xl sm:text-4xl font-display font-bold text-primary-text mb-4 sm:mb-6">Join Our Community</h2>
+          <p className="text-base sm:text-lg text-secondary-text mb-8 sm:mb-10 max-w-2xl mx-auto">Become a member, attend our events, and start building the future.</p>
+          <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 max-w-xs sm:max-w-none mx-auto">
+            <Link href="/join" className="w-full sm:w-auto"><Button variant="cta" size="lg" className="w-full sm:w-auto justify-center">Join Now</Button></Link>
+            <Link href="/contact" className="w-full sm:w-auto"><Button variant="secondary" size="lg" className="w-full sm:w-auto justify-center">Contact Us</Button></Link>
           </div>
         </div>
       </section>

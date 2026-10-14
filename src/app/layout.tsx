@@ -1,7 +1,14 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, Space_Grotesk, Orbitron } from "next/font/google";
 import "./globals.css";
 import GlowCursor from "@/components/ui/GlowCursor";
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: "#050711",
+};
 
 const inter = Inter({
   variable: "--font-inter",

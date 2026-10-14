@@ -145,18 +145,18 @@ function FloatingBadge({
 
   return (
     <div 
-      className={`absolute z-40 ${className}`}
+      className={`absolute z-30 ${className}`}
       onMouseEnter={() => setIsOpen(true)}
       onMouseLeave={() => setIsOpen(false)}
       onClick={() => setIsOpen(!isOpen)}
     >
-      <div className={`px-2 py-1 sm:px-3 sm:py-1.5 lg:px-4 lg:py-2 bg-main-bg/80 backdrop-blur-md border ${borderColorClass} rounded-full text-[9px] sm:text-[10px] lg:text-xs ${colorClass} font-heading cursor-pointer drop-shadow-md transition-all hover:bg-main-bg hover:scale-105 whitespace-nowrap`}>
+      <div className={`px-2.5 py-1 sm:px-3 sm:py-1.5 lg:px-4 lg:py-2 bg-main-bg/85 backdrop-blur-md border ${borderColorClass} rounded-full text-[10px] sm:text-xs font-heading cursor-pointer drop-shadow-md transition-all hover:bg-main-bg hover:scale-105 whitespace-nowrap shadow-sm`}>
         {title}
       </div>
 
       {/* The Popup Image */}
       {isOpen && (
-        <div className={`absolute ${popupClassName} p-1.5 bg-main-bg/90 backdrop-blur-xl border ${borderColorClass} rounded-xl shadow-[0_0_20px_rgba(0,0,0,0.5)] w-32 h-32 lg:w-40 lg:h-40 animate-in fade-in zoom-in duration-200 z-50`}>
+        <div className={`absolute ${popupClassName} p-1.5 bg-main-bg/95 backdrop-blur-xl border ${borderColorClass} rounded-xl shadow-[0_0_20px_rgba(0,0,0,0.7)] w-32 h-32 sm:w-36 sm:h-36 lg:w-40 lg:h-40 animate-in fade-in zoom-in duration-200 z-50`}>
           <img src={imageSrc} alt={title} className="w-full h-full object-cover rounded-lg" />
         </div>
       )}
@@ -166,7 +166,16 @@ function FloatingBadge({
 
 export default function InteractiveGlobe() {
   const [controlsEnabled, setControlsEnabled] = useState(true)
+  const [isTouchDevice, setIsTouchDevice] = useState(false)
   const controlsRef = useRef<any>(null)
+
+  React.useEffect(() => {
+    setIsTouchDevice(
+      window.matchMedia('(pointer: coarse)').matches ||
+      ('ontouchstart' in window) ||
+      (navigator.maxTouchPoints > 0)
+    )
+  }, [])
 
   const handleReset = () => {
     if (controlsRef.current) {
@@ -181,7 +190,12 @@ export default function InteractiveGlobe() {
       onMouseLeave={() => setControlsEnabled(true)}
     >
       <ErrorBoundary>
-        <Canvas camera={{ position: [0, 0, 8.5], fov: 45 }} gl={{ antialias: true, alpha: true }} className="touch-none cursor-grab active:cursor-grabbing">
+        <Canvas 
+          camera={{ position: [0, 0, 8.5], fov: 45 }} 
+          gl={{ antialias: true, alpha: true }} 
+          className="cursor-grab active:cursor-grabbing w-full h-full"
+          style={{ touchAction: 'pan-y' }}
+        >
           <ambientLight intensity={0.5} color="#ffffff" />
           {/* Main Sunlight (Warm/White) */}
           <directionalLight position={[10, 5, 10]} intensity={2.5} color="#fffcf5" />
@@ -202,6 +216,7 @@ export default function InteractiveGlobe() {
             ref={controlsRef}
             enableZoom={false}
             enablePan={false}
+            enableRotate={!isTouchDevice}
             autoRotate={controlsEnabled}
             autoRotateSpeed={0.5}
             maxDistance={14}
@@ -214,7 +229,7 @@ export default function InteractiveGlobe() {
 
       {/* Floating Interactive UI Badges */}
       <FloatingBadge
-        className="top-2 sm:top-8 lg:top-12 left-2 sm:left-4 lg:left-12"
+        className="top-2 sm:top-6 lg:top-12 left-2 sm:left-4 lg:left-12"
         title="Student Innovation"
         imageSrc="/skill.jpg"
         colorClass="text-primary-cyan"
@@ -222,7 +237,7 @@ export default function InteractiveGlobe() {
       />
 
       <FloatingBadge
-        className="bottom-4 sm:bottom-20 lg:bottom-16 left-2 sm:left-4 lg:left-12"
+        className="bottom-2 sm:bottom-12 lg:bottom-16 left-2 sm:left-4 lg:left-12"
         title="Startup Ecosystem"
         imageSrc="/Eureka team.jpg"
         colorClass="text-neon-magenta"
@@ -231,12 +246,12 @@ export default function InteractiveGlobe() {
       />
 
       <FloatingBadge
-        className="top-1/2 -translate-y-1/2 sm:translate-y-0 sm:top-24 right-2 sm:right-4 lg:right-12"
+        className="top-2 sm:top-20 lg:top-24 right-2 sm:right-4 lg:right-12"
         title="Events & Workshops"
         imageSrc="/event.jpg"
         colorClass="text-innovation-green"
         borderColorClass="border-innovation-green/40"
-        popupClassName="top-full mt-2 right-0"
+        popupClassName="top-full mt-2 right-0 sm:right-auto sm:left-0"
       />
 
     </div>

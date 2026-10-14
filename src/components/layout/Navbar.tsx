@@ -51,7 +51,8 @@ export default function Navbar() {
           <div className="md:hidden flex items-center">
             <button 
               onClick={() => setIsOpen(!isOpen)}
-              className="text-secondary-text hover:text-primary-text"
+              className="p-2 rounded-lg text-secondary-text hover:text-primary-cyan hover:bg-elevated-surface/60 transition-colors focus:outline-none"
+              aria-label="Toggle navigation menu"
             >
               {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
@@ -61,25 +62,28 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {isOpen && (
-        <div className="md:hidden bg-secondary-bg border-b border-border-color">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+        <div className="md:hidden bg-[#050711]/95 backdrop-blur-2xl border-b border-primary-cyan/20 shadow-[0_15px_30px_rgba(0,0,0,0.8)]">
+          <div className="px-4 pt-3 pb-6 space-y-1 sm:px-6">
             {navLinks.map((link) => (
               <Link
                 key={link.name}
                 href={link.href}
-                className="block px-3 py-2 rounded-md font-heading text-base font-medium text-secondary-text hover:text-primary-cyan hover:bg-elevated-surface"
+                className="flex items-center justify-between px-3.5 py-2.5 rounded-lg font-heading text-base font-medium text-secondary-text hover:text-primary-cyan hover:bg-primary-cyan/10 transition-all"
                 onClick={() => setIsOpen(false)}
               >
-                {link.name}
+                <span>{link.name}</span>
+                <span className="text-primary-cyan/50 text-xs font-mono">→</span>
               </Link>
             ))}
-            <Link
-              href="/auth/login"
-              className="block px-3 py-2 rounded-md font-heading text-base font-medium text-primary-cyan hover:text-[#33e0ff] hover:bg-elevated-surface"
-              onClick={() => setIsOpen(false)}
-            >
-              Sign In
-            </Link>
+            <div className="pt-3 mt-2 border-t border-border-color/60">
+              <Link
+                href="/auth/login"
+                className="flex items-center justify-center w-full px-4 py-2.5 rounded-lg font-heading text-sm font-bold text-main-bg bg-primary-cyan hover:bg-[#33e0ff] shadow-[0_0_15px_rgba(0,217,255,0.4)] transition-all"
+                onClick={() => setIsOpen(false)}
+              >
+                Sign In
+              </Link>
+            </div>
           </div>
         </div>
       )}
