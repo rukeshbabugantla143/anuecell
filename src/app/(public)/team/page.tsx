@@ -71,9 +71,9 @@ export default async function TeamPage() {
       <div className="absolute top-[600px] right-0 w-[500px] h-[400px] bg-neon-blue/10 rounded-full blur-[150px] -z-10 pointer-events-none" />
 
       {/* Hero Section */}
-      <section className="pt-32 sm:pt-36 pb-12 relative z-10 w-full px-4 sm:px-8 lg:px-[6vw]">
+      <section className="pt-28 sm:pt-36 pb-8 sm:pb-12 relative z-10 w-full px-4 sm:px-8 lg:px-[6vw]">
         <div className="text-center relative max-w-4xl mx-auto">
-          <Badge variant="info" className="mb-5 inline-flex items-center gap-2 border-primary-cyan/40 text-primary-cyan px-4 py-1.5 bg-primary-cyan/5 backdrop-blur-md shadow-[0_0_15px_rgba(0,217,255,0.15)]">
+          <Badge variant="info" className="mb-4 sm:mb-5 inline-flex items-center gap-2 border-primary-cyan/40 text-primary-cyan px-3.5 py-1 sm:px-4 sm:py-1.5 text-xs sm:text-sm bg-primary-cyan/5 backdrop-blur-md shadow-[0_0_15px_rgba(0,217,255,0.15)]">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-cyan opacity-75" />
               <span className="relative inline-flex rounded-full h-2 w-2 bg-primary-cyan" />
@@ -81,18 +81,18 @@ export default async function TeamPage() {
             The Innovators & Leaders
           </Badge>
 
-          <h1 className="hero-heading text-4xl sm:text-5xl md:text-6xl text-primary-text mb-6 leading-[1.1] tracking-tight">
+          <h1 className="hero-heading text-3xl sm:text-5xl md:text-6xl text-primary-text mb-4 sm:mb-6 leading-[1.1] tracking-tight">
             MEET OUR <span className="metallic-text">TEAM</span>
           </h1>
 
-          <p className="text-base sm:text-lg md:text-xl text-secondary-text max-w-2xl mx-auto leading-relaxed border-l-2 border-primary-cyan/40 pl-4 text-left sm:text-center sm:border-l-0 sm:pl-0">
+          <p className="text-sm sm:text-lg md:text-xl text-secondary-text max-w-2xl mx-auto leading-relaxed border-l-2 border-primary-cyan/40 pl-3.5 text-left sm:text-center sm:border-l-0 sm:pl-0">
             The passionate faculty advisors, student coordinators, and tech pioneers driving innovation, startups, and entrepreneurship across ANU.
           </p>
         </div>
       </section>
 
       {/* Departments & Grid Showcase */}
-      <section className="relative z-10 w-full px-4 sm:px-8 lg:px-[6vw] max-w-7xl mx-auto space-y-20 mt-6">
+      <section className="relative z-10 w-full px-3.5 sm:px-8 lg:px-[6vw] max-w-7xl mx-auto space-y-10 sm:space-y-20 mt-4 sm:mt-6">
         {departments.length === 0 ? (
           <div className="text-center py-20 px-6 bg-card-bg/60 backdrop-blur-md border border-border-color rounded-3xl shadow-[0_0_40px_rgba(0,0,0,0.5)] max-w-2xl mx-auto">
             <div className="h-16 w-16 rounded-2xl bg-primary-cyan/10 border border-primary-cyan/30 flex items-center justify-center mx-auto mb-4 text-primary-cyan">
@@ -105,35 +105,41 @@ export default async function TeamPage() {
           </div>
         ) : (
           departments.map((dept, idx) => (
-            <div key={idx} className="space-y-8">
+            <div key={idx} className="space-y-6 sm:space-y-8">
               {/* Department Header */}
-              <div className="border-b border-border-color/80 pb-5">
-                <div className="flex flex-wrap items-center gap-3 mb-2">
+              <div className="border-b border-border-color/80 pb-3.5 sm:pb-5">
+                <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-1.5 sm:mb-2">
                   <div className="h-2 w-2 rounded-full bg-primary-cyan shadow-[0_0_8px_rgba(0,217,255,0.9)]" />
-                  <h2 className="text-2xl sm:text-3xl font-heading font-bold text-primary-text tracking-tight">
+                  <h2 className="text-xl sm:text-3xl font-heading font-bold text-primary-text tracking-tight">
                     {dept.title}
                   </h2>
-                  <span className="text-xs px-2.5 py-0.5 rounded-full bg-primary-cyan/10 border border-primary-cyan/30 text-primary-cyan font-mono font-semibold">
+                  <span className="text-[11px] sm:text-xs px-2 sm:px-2.5 py-0.5 rounded-full bg-primary-cyan/10 border border-primary-cyan/30 text-primary-cyan font-mono font-semibold">
                     {dept.members.length} {dept.members.length === 1 ? 'Member' : 'Members'}
                   </span>
                 </div>
-                <p className="text-secondary-text text-sm sm:text-base max-w-3xl leading-relaxed">
+                <p className="text-secondary-text text-xs sm:text-base max-w-3xl leading-relaxed">
                   {dept.description}
                 </p>
               </div>
 
-              {/* Members Grid (Responsive, Modern Cyber Cards) */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 sm:gap-7">
+              {/* Members Grid (Responsive 2-column on mobile, centered if single member) */}
+              <div
+                className={`grid gap-3 sm:gap-7 ${
+                  dept.members.length === 1
+                    ? 'grid-cols-1 max-w-[280px] sm:max-w-none sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mx-auto sm:mx-0'
+                    : 'grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'
+                }`}
+              >
                 {dept.members.map((member) => (
                   <div
                     key={member.id}
-                    className="group relative rounded-2xl max-w-sm w-full bg-card-bg/85 backdrop-blur-xl border border-border-color/80 hover:border-primary-cyan/60 shadow-[0_4px_24px_rgba(0,0,0,0.5)] hover:shadow-[0_0_30px_rgba(0,217,255,0.2)] transition-all duration-300 hover:-translate-y-2 overflow-hidden flex flex-col"
+                    className="group relative rounded-xl sm:rounded-2xl w-full bg-card-bg/85 backdrop-blur-xl border border-border-color/80 hover:border-primary-cyan/60 shadow-[0_4px_24px_rgba(0,0,0,0.5)] hover:shadow-[0_0_30px_rgba(0,217,255,0.2)] transition-all duration-300 hover:-translate-y-1.5 overflow-hidden flex flex-col"
                   >
                     {/* Glowing Accent Top Line */}
                     <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-primary-cyan to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20 shadow-[0_0_10px_rgba(0,217,255,0.8)]" />
 
                     {/* Member Photo */}
-                    <div className="relative w-full h-72 sm:h-80 bg-[#080d19] overflow-hidden flex items-center justify-center border-b border-border-color/80">
+                    <div className="relative w-full aspect-[4/5] sm:h-80 bg-[#080d19] overflow-hidden flex items-center justify-center border-b border-border-color/80">
                       {member.profile_photo_url ? (
                         <img
                           src={member.profile_photo_url}
@@ -141,38 +147,38 @@ export default async function TeamPage() {
                           className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
                         />
                       ) : (
-                        <div className="h-full w-full flex items-center justify-center bg-gradient-to-br from-primary-cyan/15 to-neon-blue/15 text-primary-cyan font-heading font-black text-4xl">
+                        <div className="h-full w-full flex items-center justify-center bg-gradient-to-br from-primary-cyan/15 to-neon-blue/15 text-primary-cyan font-heading font-black text-2xl sm:text-4xl">
                           {member.full_name?.charAt(0)}
                         </div>
                       )}
                     </div>
 
                     {/* Member Details */}
-                    <div className="p-5 flex flex-col flex-1 justify-between gap-3 bg-gradient-to-b from-card-bg to-[#0a101d]">
+                    <div className="p-2.5 sm:p-5 flex flex-col flex-1 justify-between gap-2 sm:gap-3 bg-gradient-to-b from-card-bg to-[#0a101d]">
                       <div>
-                        <h3 className="font-heading font-bold text-lg text-primary-text group-hover:text-primary-cyan transition-colors tracking-tight line-clamp-1">
+                        <h3 className="font-heading font-bold text-xs xs:text-sm sm:text-lg text-primary-text group-hover:text-primary-cyan transition-colors tracking-tight line-clamp-1">
                           {member.full_name}
                         </h3>
-                        <p className="text-xs font-semibold uppercase tracking-wider text-primary-cyan font-heading mt-1">
+                        <p className="text-[9px] xs:text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-primary-cyan font-heading mt-0.5 sm:mt-1 line-clamp-1">
                           {member.designation}
                         </p>
                         {member.biography && (
-                          <p className="text-xs text-muted-text line-clamp-2 mt-2 leading-relaxed">
+                          <p className="text-xs text-muted-text line-clamp-2 mt-2 leading-relaxed hidden sm:block">
                             {member.biography}
                           </p>
                         )}
                       </div>
 
                       {/* Social & Contact Actions */}
-                      <div className="pt-3 border-t border-border-color/60 flex items-center justify-between">
-                        <div className="flex items-center gap-1.5">
+                      <div className="pt-2 sm:pt-3 border-t border-border-color/60 flex items-center justify-between">
+                        <div className="flex items-center gap-1 sm:gap-1.5">
                           {member.email && (
                             <a
                               href={`mailto:${member.email}`}
-                              className="h-8 w-8 rounded-lg bg-secondary-bg hover:bg-primary-cyan/20 border border-border-color hover:border-primary-cyan/50 text-secondary-text hover:text-primary-cyan flex items-center justify-center transition-all duration-200"
+                              className="h-6 w-6 sm:h-8 sm:w-8 rounded-md sm:rounded-lg bg-secondary-bg hover:bg-primary-cyan/20 border border-border-color hover:border-primary-cyan/50 text-secondary-text hover:text-primary-cyan flex items-center justify-center transition-all duration-200"
                               title={`Email: ${member.email}`}
                             >
-                              <Mail className="h-4 w-4" />
+                              <Mail className="h-3 w-3 sm:h-4 sm:w-4" />
                             </a>
                           )}
 
@@ -181,10 +187,10 @@ export default async function TeamPage() {
                               href={member.linkedin_url}
                               target="_blank"
                               rel="noreferrer"
-                              className="h-8 w-8 rounded-lg bg-secondary-bg hover:bg-[#0077b5]/20 border border-border-color hover:border-[#0077b5]/50 text-secondary-text hover:text-[#0077b5] flex items-center justify-center transition-all duration-200"
+                              className="h-6 w-6 sm:h-8 sm:w-8 rounded-md sm:rounded-lg bg-secondary-bg hover:bg-[#0077b5]/20 border border-border-color hover:border-[#0077b5]/50 text-secondary-text hover:text-[#0077b5] flex items-center justify-center transition-all duration-200"
                               title="LinkedIn Profile"
                             >
-                              <LinkedinIcon className="h-4 w-4" />
+                              <LinkedinIcon className="h-3 w-3 sm:h-4 sm:w-4" />
                             </a>
                           )}
 
@@ -193,15 +199,15 @@ export default async function TeamPage() {
                               href={member.instagram_url}
                               target="_blank"
                               rel="noreferrer"
-                              className="h-8 w-8 rounded-lg bg-secondary-bg hover:bg-[#E1306C]/20 border border-border-color hover:border-[#E1306C]/50 text-secondary-text hover:text-[#E1306C] flex items-center justify-center transition-all duration-200"
+                              className="h-6 w-6 sm:h-8 sm:w-8 rounded-md sm:rounded-lg bg-secondary-bg hover:bg-[#E1306C]/20 border border-border-color hover:border-[#E1306C]/50 text-secondary-text hover:text-[#E1306C] flex items-center justify-center transition-all duration-200"
                               title="Instagram Profile"
                             >
-                              <InstagramIcon className="h-4 w-4" />
+                              <InstagramIcon className="h-3 w-3 sm:h-4 sm:w-4" />
                             </a>
                           )}
                         </div>
 
-                        <span className="text-[11px] font-mono text-muted-text/80 uppercase">
+                        <span className="text-[8px] sm:text-[11px] font-mono text-muted-text/80 uppercase hidden xs:inline-block">
                           E-Cell Core
                         </span>
                       </div>

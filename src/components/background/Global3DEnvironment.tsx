@@ -89,6 +89,17 @@ export function Global3DEnvironment() {
 
         @media (max-width: 768px) {
           .perspective-container {
+            display: block !important;
+          }
+          .grid-floor {
+            animation: none !important;
+            transform: translate(-50%, -50%) perspective(600px) rotateX(55deg) !important;
+            width: 150vw !important;
+            height: 150vh !important;
+            background-size: 50px 50px !important;
+            opacity: 0.45 !important;
+          }
+          .glow-grid {
             display: none !important;
           }
         }
