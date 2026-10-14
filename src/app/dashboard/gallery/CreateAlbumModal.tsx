@@ -179,12 +179,14 @@ export default function CreateAlbumModal() {
                     disabled={saving}
                     className="w-full bg-[#151F30] border border-border-color rounded-xl px-4 py-2.5 text-sm text-primary-text focus:outline-none focus:border-primary-cyan"
                   >
+                    <option value="Online Event">Online Event</option>
+                    <option value="Campus Event">Campus Event</option>
                     <option value="External College Fest">External College Fest</option>
                     <option value="Inter-College Hackathon">Inter-College Hackathon</option>
-                    <option value="Industrial Visit">Industrial Visit</option>
-                    <option value="Campus Event">Campus Event</option>
                     <option value="Workshop & Bootcamp">Workshop & Bootcamp</option>
+                    <option value="Industrial Visit">Industrial Visit</option>
                     <option value="Celebrations & Meetups">Celebrations & Meetups</option>
+                    <option value="Other">Other</option>
                   </select>
                 </div>
 
