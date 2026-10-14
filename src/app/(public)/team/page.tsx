@@ -67,8 +67,8 @@ export default async function TeamPage() {
   return (
     <main className="min-h-screen relative pb-28 bg-transparent selection:bg-primary-cyan/30 selection:text-white">
       {/* Ambient background glows */}
-      <div className="absolute top-20 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-primary-cyan/10 rounded-full blur-[140px] -z-10 pointer-events-none" />
-      <div className="absolute top-[600px] right-0 w-[500px] h-[400px] bg-neon-blue/10 rounded-full blur-[150px] -z-10 pointer-events-none" />
+      <div className="hidden md:block absolute top-20 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-primary-cyan/10 rounded-full blur-[140px] -z-10 pointer-events-none" />
+      <div className="hidden md:block absolute top-[600px] right-0 w-[500px] h-[400px] bg-neon-blue/10 rounded-full blur-[150px] -z-10 pointer-events-none" />
 
       {/* Hero Section */}
       <section className="pt-28 sm:pt-36 pb-8 sm:pb-12 relative z-10 w-full px-4 sm:px-8 lg:px-[6vw]">
